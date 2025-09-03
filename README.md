@@ -1,10 +1,3 @@
 # Assignment1
-##Group members: Beining Niu and Wenyi Wang##Beining Test
+# Group members: Beining Niu and Wenyi Wang
 
-Some changes here.
-
-Wenyi test
-
-Wenyi test1
-
-Beining test
