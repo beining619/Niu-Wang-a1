@@ -3,9 +3,9 @@
 # 1) https://github.com/beining619/Niu-Wang-a1.git
 # 2)
 library("haven")
-angell_stata <- read_dta("/Users/wyi/Desktop/github/Niu-Wang-a1/angell.dta")
+angell_stata <- read_dta("/Users/niubeining/Niu-Wang-a1/angell.dta")
 # 3)
-angell_txt <- read.table("/Users/wyi/Desktop/github/Niu-Wang-a1/angell.txt")
+angell_txt <- read.table("/Users/niubeining/Niu-Wang-a1/angell.txt")
 # 4) 
 str(angell_stata)
 str(angell_txt)
@@ -16,5 +16,12 @@ class(angell_txt)
 typeof(angell_stata)
 typeof(angell_txt)
 # 5)
+colnames(angell_txt) <- c("city", "morint", "ethhet", "geomob", "region")
+str(angell_txt)
+install.packages("dplyr")
+library(dplyr)
+angell_txt <- as_tibble(angell_txt)
+
+
 
 
