@@ -1,5 +1,5 @@
 ---
-title: "Assignment 1_Beining Liu & Wenyi Wang"
+title: "Assignment 1_Beining Niu & Wenyi Wang"
 subtitle: "Due at 11:59pm on September 16."
 format: pdf 
 editor: visual
