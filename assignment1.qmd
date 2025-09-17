@@ -111,35 +111,29 @@ sum(Boston$chas == 1, na.rm = TRUE)
 11\) Do any of the suburbs of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each variable.
 
 ```{r}
-options(width = 60)
-crim_min  <- min(Boston$crim)
-crim_max  <- max(Boston$crim)
-crim_p95  <- quantile(Boston$crim, 0.95)
-crim_n95  <- sum(Boston$crim > crim_p95)
+crim_min <- min(Boston$crim)
+crim_max <- max(Boston$crim)
+crim_p95 <- unname(quantile(Boston$crim, 0.95, names = FALSE))  
+crim_n95 <- sum(Boston$crim > crim_p95)
 
-tax_min   <- min(Boston$tax)
-tax_max   <- max(Boston$tax)
-tax_p95   <- quantile(Boston$tax, 0.95)
-tax_n95   <- sum(Boston$tax > tax_p95)
+tax_min  <- min(Boston$tax)
+tax_max  <- max(Boston$tax)
+tax_p95  <- unname(quantile(Boston$tax, 0.95, names = FALSE))
+tax_n95  <- sum(Boston$tax > tax_p95)
 
-ptr_min   <- min(Boston$ptratio)
-ptr_max   <- max(Boston$ptratio)
-ptr_p95   <- quantile(Boston$ptratio, 0.95)
-ptr_n95   <- sum(Boston$ptratio > ptr_p95)
+ptr_min  <- min(Boston$ptratio)
+ptr_max  <- max(Boston$ptratio)
+ptr_p95  <- unname(quantile(Boston$ptratio, 0.95, names = FALSE))
+ptr_n95  <- sum(Boston$ptratio > ptr_p95)
 
-cat(
-  "The crime rate ranges from", crim_min, "to", crim_max, 
-  "with", crim_n95, "suburbs above the 95th percentile of", paste0(crim_p95,"."),
-  
-  "The tax rate ranges from", tax_min, "to", tax_max, 
-  "with", tax_n95, "suburbs above the 95th percentile of", paste0(tax_p95, "."),
-  
-  "The pupil–teacher ratio ranges from", ptr_min, "to", ptr_max, 
-  "with", ptr_n95, "suburbs above the 95th percentile of", paste0(ptr_p95,".")
-)
 
+crim_min; crim_max; round(crim_p95, 2); crim_n95
+tax_min;  tax_max;  tax_p95;            tax_n95
+ptr_min;  ptr_max;  ptr_p95;            ptr_n95
 
 ```
+
+The crime rate ranges from 0.00632 to 88.9762 with 26 suburbs above the 95th percentile of 15.78915. The tax rate ranges from 187 to 711 with 5 suburbs above the 95th percentile of 666. The pupil–teacher ratio ranges from 12.6 to 22 with 18 suburbs above the 95th percentile of 21.
 
 12\) Describe the distribution of pupil-teacher ratio among the towns in this data set that have a per capita crime rate larger than 1. How does it differ from towns that have a per capita crime rate smaller than 1?
 
@@ -174,17 +168,13 @@ For towns with per capita crime rate greater than 1, the pupil–teacher ratio h
 my_CI <- function(estimate, se) {
   lower <- estimate - 1.96 * se
   upper <- estimate + 1.96 * se
-  
-  message <- paste0(
-    "The 95% CI upper bound of point estimate ", estimate,
-    " with standard error ", se, " is ", round(upper, 3),
-    ". The lower bound is ", round(lower, 3), "."
-  )
-  cat(message, "\n")
+  return(c(lower, upper))
 }
 
 my_CI(2, 0.2)
 ```
+
+The 95% CI upper bound of point estimate 2 with standard error 0.2 is 2.392. The lower bound is 1.608.
 
 14\) Create a new function called `my_CI2` that does that same thing as the `my_CI` function but outputs a vector of length 2 with the lower and upper bound of the confidence interval instead of printing out the text. Use this to find the 95% confidence interval for a point estimate of 0 and standard error 0.4.
 
