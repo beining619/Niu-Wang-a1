@@ -1,7 +1,10 @@
 ---
 title: "Assignment 1_Beining Niu & Wenyi Wang"
 subtitle: "Due at 11:59pm on September 16."
-format: pdf 
+format:
+  pdf:
+    code-block:
+      wrap: true
 editor: visual
 ---
 
@@ -83,7 +86,6 @@ R comes also with many built-in datasets. The "MASS" package, for example, comes
 7\) Install the "MASS" package, load the package. Then, load the Boston dataset.
 
 ```{r}
-install.packages("MASS")     
 library(MASS)
 data("Boston")              
 ```
@@ -236,9 +238,9 @@ my_ethhet_CI(angell_stata$ethhet, conf.level = .99)
 
 ```{r}
 angell_CI <- function(x, conf.level) {
-  if(!(is.numeric(x) || is.logical(x))) {
+  if(!(is.numeric(x) || is.logical(x)))
     return (NA)
-  }
+  else {
   mean <- mean(x, na.rm = TRUE)
   sd <- sd(x, na.rm = TRUE)
   n <- length(x)
@@ -248,6 +250,7 @@ angell_CI <- function(x, conf.level) {
   upper <- mean + z * se
   
   return(c(lower, upper))
+ }
 }
 
 angell_CI(angell_stata$ethhet, conf.level = .95)
