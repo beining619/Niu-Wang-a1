@@ -164,11 +164,55 @@ For towns with per capita crime rate greater than 1, the pupil–teacher ratio h
 
 *Hint: Pasting text in R can be done with:* `paste()` *and* `paste0()`
 
+```{r}
+my_CI <- function(estimate, se) {
+  lower <- estimate - 1.96 * se
+  upper <- estimate + 1.96 * se
+  
+  message <- paste0(
+    "The 95% CI upper bound of point estimate ", estimate,
+    " with standard error ", se, " is ", round(upper, 3),
+    ". The lower bound is ", round(lower, 3), "."
+  )
+  cat(message, "\n")
+}
+
+my_CI(2, 0.2)
+```
+
 14\) Create a new function called `my_CI2` that does that same thing as the `my_CI` function but outputs a vector of length 2 with the lower and upper bound of the confidence interval instead of printing out the text. Use this to find the 95% confidence interval for a point estimate of 0 and standard error 0.4.
+
+```{r}
+my_CI2 <- function(estimate, se) {
+  lower <- estimate - 1.96 * se
+  upper <- estimate + 1.96 * se
+  return(paste0("(", round(lower, 3), ", ", round(upper, 3), ")"))
+}
+
+my_CI2(0, 0.4)
+```
 
 15\) Update the `my_CI2` function to take any confidence level instead of only 95%. Call the new function `my_CI3`. You should add an argument to your function for confidence level.
 
 *Hint: Use the* `qnorm` *function to find the appropriate z-value. For example, for a 95% confidence interval, using* `qnorm(0.975)` *gives approximately 1.96.*
+
+```{r}
+my_CI3 <- function(estimate, se, conf_level = 0.95) {
+  
+  if(conf_level <= 0 || conf_level >= 1) {
+    stop("Confidence level must be between 0 and 1.")
+  }
+  
+  z <- qnorm((1 + conf_level) / 2)
+  lower <- estimate - z * se
+  upper <- estimate + z * se
+  
+  return(paste0("(", round(lower, 3), ", ", round(upper, 3), ")"))
+}
+
+my_CI3(2, 0.2, conf_level = 0.95) 
+my_CI3(2, 0.2, conf_level = 0.9)
+```
 
 16\) Without hardcoding any numbers in the code, find a 99% confidence interval for Ethnic Heterogeneity in the Angell dataset. Find the standard error by dividing the standard deviation by the square root of the sample size.
 
