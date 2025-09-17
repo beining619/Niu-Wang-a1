@@ -46,15 +46,79 @@ R comes also with many built-in datasets. The "MASS" package, for example, comes
 
 7\) Install the "MASS" package, load the package. Then, load the Boston dataset.
 
+```{r}
+install.packages("MASS")     
+library(MASS)
+data("Boston")              
+```
+
 8\) What is the type of the Boston object?
+
+```{r}
+typeof(Boston)
+```
 
 9\) What is the class of the Boston object?
 
+```{r}
+class(Boston)
+```
+
 10\) How many of the suburbs in the Boston data set bound the Charles river?
+
+```{r}
+sum(Boston$chas == 1, na.rm = TRUE)
+```
 
 11\) Do any of the suburbs of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each variable.
 
+```{r}
+crim_min  <- min(Boston$crim)
+crim_max  <- max(Boston$crim)
+crim_p95  <- quantile(Boston$crim, 0.95)
+crim_n95  <- sum(Boston$crim > crim_p95)
+
+tax_min   <- min(Boston$tax)
+tax_max   <- max(Boston$tax)
+tax_p95   <- quantile(Boston$tax, 0.95)
+tax_n95   <- sum(Boston$tax > tax_p95)
+
+ptr_min   <- min(Boston$ptratio)
+ptr_max   <- max(Boston$ptratio)
+ptr_p95   <- quantile(Boston$ptratio, 0.95)
+ptr_n95   <- sum(Boston$ptratio > ptr_p95)
+
+cat(
+  "The crime rate ranges from", crim_min, "to", crim_max, "with", crim_n95, "suburbs above the 95th percentile of", paste0(crim_p95, "."),
+  
+  "The tax rate ranges from", tax_min, "to", tax_max, "with", tax_n95, "suburbs above the 95th percentile of", paste0(tax_p95, "."),
+  
+  "The pupil–teacher ratio ranges from", ptr_min, "to", ptr_max, "with", ptr_n95, "suburbs above the 95th percentile of", paste0(ptr_p95, ".")
+)
+
+
+```
+
 12\) Describe the distribution of pupil-teacher ratio among the towns in this data set that have a per capita crime rate larger than 1. How does it differ from towns that have a per capita crime rate smaller than 1?
+
+```{r}
+high_crime <- Boston$ptratio[Boston$crim > 1]
+low_crime  <- Boston$ptratio[Boston$crim <= 1]
+
+mean(high_crime)
+median(high_crime)
+sd(high_crime)
+min(high_crime)
+max(high_crime)
+
+mean(low_crime)
+median(low_crime)
+sd(low_crime)
+min(low_crime)
+max(low_crime)
+```
+
+For towns with per capita crime rate greater than 1, the pupil–teacher ratio has a mean of 19.29, a median of 20.2, a standard deviation of 2.12, and ranges from 14.7 to 21.2. In contrast, for towns with crime rate less than or equal to 1, the mean is 18.02, the median is 18.3, the standard deviation is 2.06, and the range is 12.6 to 22. Overall, towns with higher crime rates tend to have slightly larger pupil–teacher ratios, while towns with lower crime rates show a wider spread and include the lowest ratios in the dataset.
 
 ## Writing Functions
 
