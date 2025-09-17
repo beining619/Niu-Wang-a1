@@ -23,6 +23,10 @@ Download both the Angell.dta (Stata data format) dataset and the Angell.txt data
 
 ```{r}
 library("haven")
+library("ggplot2")
+```
+
+```{r}
 angell_stata <- read_dta('/Users/wyi/Desktop/Fall 2025/SURVMETH 727/Niu-Wang-a1/angell.dta')
 angell_stata
 ```
@@ -36,9 +40,41 @@ angell_txt
 
 4\) What are the differences between `angell_stata` and `angell_txt`? Are there differences in the classes of the individual columns?
 
+There are no column names in angell_txt, while column names are saved in angell_stata. Classes of the individual columns are the same in angell_stata and angell_txt.
+
 5\) Make any updates necessary so that `angell_txt` is the same as `angell_stata`.
 
+```{r}
+colnames(angell_txt) <- c("city", "morint", "ethhet", "geomob", "region")
+angell_txt
+```
+
 6\) Describe the Ethnic Heterogeneity variable. Use descriptive statistics such as mean, median, standard deviation, etc. How does it differ by region?
+
+```{r}
+summary(angell_stata$ethhet)
+sd(angell_stata$ethhet)
+ggplot(angell_stata, aes(x = ethhet)) +
+  geom_histogram(binwidth = 5,
+                 color = "white") +
+  labs(x = "Ethnic Heterogeneity", y = "Percentage")
+```
+
+For the variable of Ethnic Heterogeneity, the range is between 10.60 and 84.50. The mean is 31.37 and the median is 23.70, suggesting a positively skewed distribution (also shown in the histogram). The standard deviation is about 20.41, indicating the percentages of nonwhite and foreign-born white residents greatly vary around the mean across these 43 cities.
+
+```{r}
+summary(angell_stata$region)
+sd(angell_stata$region)
+
+tapply(angell_stata$ethhet, angell_stata$region, summary)
+tapply(angell_stata$ethhet, angell_stata$region, sd, na.rm = TRUE)
+
+ggplot(angell_stata, aes(x = region, y = ethhet)) +
+  geom_boxplot()+
+  labs(x = "Region", y = "Ethnic Heterogeneity")
+```
+
+According to the descriptive statistics and boxplot, the Southeast shows the highest mean of 52.49 and median of 53.80 in Ethnic Heterogeneity among these regions, which means, on average, the Southeast has the highest percentage of nonwhite and foreign-born white residents when compared to the Northeast, the Midwest, and the West. In addition, the Southeast also has the highest standard deviation (SD = 21.44) among regions, indicating the percentage of nonwhite and foreign-born white residents has highest variation across cities in the Southeast, when compared to the variation of Ethnic Heterogeneity of cities in their corresponding regions.
 
 ## Describing Data
 
