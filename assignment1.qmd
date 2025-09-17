@@ -89,11 +89,11 @@ ptr_p95   <- quantile(Boston$ptratio, 0.95)
 ptr_n95   <- sum(Boston$ptratio > ptr_p95)
 
 cat(
-  "The crime rate ranges from", crim_min, "to", crim_max, "with", crim_n95, "suburbs above the 95th percentile of", paste0(crim_p95, "."),
+  "The crime rate ranges from", crim_min, "to", crim_max, "with", crim_n95, "suburbs above the 95th percentile of", paste0(crim_p95,"."),
   
   "The tax rate ranges from", tax_min, "to", tax_max, "with", tax_n95, "suburbs above the 95th percentile of", paste0(tax_p95, "."),
   
-  "The pupil–teacher ratio ranges from", ptr_min, "to", ptr_max, "with", ptr_n95, "suburbs above the 95th percentile of", paste0(ptr_p95, ".")
+  "The pupil–teacher ratio ranges from", ptr_min, "to", ptr_max, "with", ptr_n95, "suburbs above the 95th percentile of", paste0(ptr_p95,".")
 )
 
 
