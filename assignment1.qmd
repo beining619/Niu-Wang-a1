@@ -240,7 +240,7 @@ my_ethhet_CI(angell_stata$ethhet, conf.level = .99)
 angell_CI <- function(x, conf.level) {
   if(!(is.numeric(x) || is.logical(x)))
     return (NA)
-  else {
+  else
   mean <- mean(x, na.rm = TRUE)
   sd <- sd(x, na.rm = TRUE)
   n <- length(x)
@@ -248,9 +248,7 @@ angell_CI <- function(x, conf.level) {
   z <- qnorm((1 + conf.level)/2)
   lower <- mean - z * se
   upper <- mean + z * se
-  
   return(c(lower, upper))
- }
 }
 
 angell_CI(angell_stata$ethhet, conf.level = .95)
