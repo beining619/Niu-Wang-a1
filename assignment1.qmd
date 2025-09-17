@@ -216,4 +216,40 @@ my_CI3(2, 0.2, conf_level = 0.9)
 
 16\) Without hardcoding any numbers in the code, find a 99% confidence interval for Ethnic Heterogeneity in the Angell dataset. Find the standard error by dividing the standard deviation by the square root of the sample size.
 
+```{r}
+my_ethhet_CI <- function(x, conf.level) {
+  mean <- mean(x, na.rm = TRUE)
+  sd <- sd(x, na.rm = TRUE)
+  n <- length(x)
+  se <- sd/sqrt(n)
+  z <- qnorm((1 + conf.level)/2)
+  lower <- mean - z * se
+  upper <- mean + z * se
+  return(c(lower, upper))
+  
+}
+
+my_ethhet_CI(angell_stata$ethhet, conf.level = .99)
+```
+
 17\) Write a function that you can `apply` to the Angell dataset to get 95% confidence intervals. The function should take one argument: a vector. Use if-else statements to output NA and avoid error messages if the column in the data frame is not numeric or logical.
+
+```{r}
+angell_CI <- function(x, conf.level) {
+  if(!(is.numeric(x) || is.logical(x))) {
+    return (NA)
+  }
+  mean <- mean(x, na.rm = TRUE)
+  sd <- sd(x, na.rm = TRUE)
+  n <- length(x)
+  se <- sd/sqrt(n)
+  z <- qnorm((1 + conf.level)/2)
+  lower <- mean - z * se
+  upper <- mean + z * se
+  
+  return(c(lower, upper))
+}
+
+angell_CI(angell_stata$ethhet, conf.level = .95)
+angell_CI(angell_stata$city)
+```
